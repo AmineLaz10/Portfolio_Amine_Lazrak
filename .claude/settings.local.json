@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ssh-keygen -t ed25519 -C \"aminelazrak@git\" -f ~/.ssh/id_ed25519_github -N \"\")",
+      "Bash(find \"/Users/aminelazrak/Downloads/solution_02-Data-Toolkit_01-Data-Analysis_03-US-Oil-and-Gas-Production \\(1\\)\" -type f -name \"*.py\" -o -name \"*.ipynb\" -o -name \"*.md\" -o -name \"*.txt\" -o -name \"*.csv\" -o -name \"*.json\")",
+      "Bash(ls -la \"/Users/aminelazrak/Downloads/solution_02-Data-Toolkit_01-Data-Analysis_03-US-Oil-and-Gas-Production \\(1\\)/\")",
+      "Bash(ls -la \"/Users/aminelazrak/Downloads/solution_02-Data-Toolkit_01-Data-Analysis_03-US-Oil-and-Gas-Production \\(1\\)/tests/\")",
+      "Bash(python3:*)",
+      "Bash(npm run:*)"
+    ]
+  }
+}

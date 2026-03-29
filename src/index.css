@@ -1,0 +1,525 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ── Deep navy background — professional consultant palette ── */
+    --background: 221 32% 7%;
+    --foreground: 213 18% 93%;
+
+    --card: 221 28% 10%;
+    --card-foreground: 213 18% 93%;
+
+    --popover: 221 28% 10%;
+    --popover-foreground: 213 18% 93%;
+
+    /* Steel blue primary — reads: credible, corporate, data-driven */
+    --primary: 214 84% 56%;
+    --primary-foreground: 221 32% 7%;
+
+    --secondary: 221 22% 16%;
+    --secondary-foreground: 213 12% 82%;
+
+    --muted: 221 20% 19%;
+    --muted-foreground: 213 10% 54%;
+
+    --accent: 214 84% 56%;
+    --accent-foreground: 221 32% 7%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 213 18% 93%;
+
+    --border: 221 22% 17%;
+    --input: 221 22% 17%;
+    --ring: 214 84% 56%;
+
+    --radius: 0.5rem;
+
+    --gradient-primary: linear-gradient(135deg, hsl(214 84% 56%), hsl(199 90% 52%));
+    --gradient-card: linear-gradient(145deg, hsl(221 28% 11%), hsl(221 28% 9%));
+    --gradient-hero: radial-gradient(ellipse 80% 60% at 20% 40%, hsl(214 84% 56% / 0.07) 0%, transparent 70%);
+    --shadow-glow: 0 0 80px hsl(214 84% 56% / 0.09);
+    --shadow-card: 0 2px 20px hsl(221 32% 4% / 0.45);
+
+    --sidebar-background: 221 28% 10%;
+    --sidebar-foreground: 213 18% 93%;
+    --sidebar-primary: 214 84% 56%;
+    --sidebar-primary-foreground: 221 32% 7%;
+    --sidebar-accent: 221 22% 16%;
+    --sidebar-accent-foreground: 213 18% 93%;
+    --sidebar-border: 221 22% 17%;
+    --sidebar-ring: 214 84% 56%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  ::selection {
+    background: hsl(214 84% 56% / 0.25);
+    color: hsl(213 18% 97%);
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+
+  .font-display {
+    font-family: "Playfair Display", Georgia, serif;
+  }
+
+  .bg-grid-pattern {
+    background-image:
+      linear-gradient(to right, hsl(221 22% 17% / 0.35) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(221 22% 17% / 0.35) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  .bg-dot-pattern {
+    background-image: radial-gradient(hsl(221 22% 22% / 0.45) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .glow-effect {
+    box-shadow: var(--shadow-glow);
+  }
+}
+
+/* ── Scroll-triggered reveal animations ── */
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-up.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.96);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-scale.revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── Hero entrance (CSS-only, fires on mount) ── */
+
+@keyframes hero-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-animate {
+  opacity: 0;
+  animation: hero-enter 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── Decorative line grow ── */
+
+@keyframes line-grow {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.line-grow {
+  transform-origin: left;
+  animation: line-grow 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.3s;
+  transform: scaleX(0);
+}
+
+/* ── Subtle float ── */
+
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+  animation: gentle-float 5s ease-in-out infinite;
+}
+
+/* ── Counter pulse ── */
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* ── Mobile menu slide ── */
+
+@keyframes menu-slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-enter {
+  animation: menu-slide-down 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.menu-link-enter {
+  opacity: 0;
+  animation: hero-enter 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── Card hover lift with gradient glow ── */
+
+.card-hover {
+  position: relative;
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s ease;
+}
+
+.card-hover::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, transparent, transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s ease, background 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 12px 40px hsl(228 10% 4% / 0.35),
+    0 0 30px hsl(214 84% 56% / 0.06);
+}
+
+.card-hover:hover::before {
+  opacity: 1;
+  background: linear-gradient(135deg, hsl(214 84% 56% / 0.5), hsl(199 90% 52% / 0.3), transparent 60%);
+}
+
+/* ── Timeline connector ── */
+
+.timeline-line {
+  position: relative;
+}
+
+.timeline-line::before {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    hsl(214 84% 56% / 0.45),
+    hsl(221 22% 17%)
+  );
+}
+
+/* ── Smooth underline animation ── */
+
+.animated-underline {
+  position: relative;
+}
+
+.animated-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: hsl(var(--primary));
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animated-underline:hover::after {
+  width: 100%;
+}
+
+/* ── Scrollbar styling ── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
+
+/* ── Typewriter cursor ── */
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.typewriter-cursor {
+  animation: blink-cursor 0.8s step-end infinite;
+  color: hsl(var(--primary));
+  font-weight: 300;
+  margin-left: 1px;
+}
+
+/* ── Scroll progress bar glow ── */
+
+.scroll-progress-glow {
+  box-shadow: 0 0 8px hsl(214 84% 56% / 0.4), 0 0 20px hsl(214 84% 56% / 0.15);
+}
+
+/* ── Text reveal animation ── */
+
+.text-reveal-container .text-reveal-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.text-reveal-container.text-revealed .text-reveal-word {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Page transitions ── */
+
+.page-transition {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.page-transition-enter {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+/* ── Morphing blob ── */
+
+@keyframes morph {
+  0%, 100% {
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    border-radius: 55% 45% 35% 65% / 58% 38% 62% 42%;
+    transform: rotate(5deg) scale(1.02);
+  }
+  50% {
+    border-radius: 35% 65% 50% 50% / 40% 60% 40% 60%;
+    transform: rotate(-3deg) scale(0.98);
+  }
+  75% {
+    border-radius: 60% 40% 45% 55% / 50% 35% 65% 50%;
+    transform: rotate(3deg) scale(1.01);
+  }
+}
+
+.morphing-blob {
+  animation: morph 12s ease-in-out infinite;
+  filter: blur(80px);
+  position: absolute;
+}
+
+/* ── Gradient text shimmer ── */
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.text-gradient-shimmer {
+  background: linear-gradient(
+    90deg,
+    hsl(214 84% 56%) 0%,
+    hsl(199 90% 62%) 25%,
+    hsl(214 84% 56%) 50%,
+    hsl(199 90% 62%) 75%,
+    hsl(214 84% 56%) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ── Staggered reveal for children ── */
+
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stagger-children.revealed > *:nth-child(1) { transition-delay: 0ms; }
+.stagger-children.revealed > *:nth-child(2) { transition-delay: 80ms; }
+.stagger-children.revealed > *:nth-child(3) { transition-delay: 160ms; }
+.stagger-children.revealed > *:nth-child(4) { transition-delay: 240ms; }
+.stagger-children.revealed > *:nth-child(5) { transition-delay: 320ms; }
+.stagger-children.revealed > *:nth-child(6) { transition-delay: 400ms; }
+.stagger-children.revealed > *:nth-child(7) { transition-delay: 480ms; }
+.stagger-children.revealed > *:nth-child(8) { transition-delay: 560ms; }
+
+.stagger-children.revealed > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Reveal from right ── */
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(24px);
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── Glow pulse on availability badge ── */
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 4px hsl(214 84% 56% / 0.3), 0 0 12px hsl(214 84% 56% / 0.1); }
+  50% { box-shadow: 0 0 8px hsl(214 84% 56% / 0.5), 0 0 24px hsl(214 84% 56% / 0.2); }
+}
+
+.glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* ── Floating decorative shapes ── */
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-10px) rotate(2deg); }
+  66% { transform: translateY(5px) rotate(-1deg); }
+}
+
+@keyframes float-medium {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(-3deg); }
+}
+
+.float-slow { animation: float-slow 8s ease-in-out infinite; }
+.float-medium { animation: float-medium 6s ease-in-out infinite; }
+
+/* ── Image reveal ── */
+
+@keyframes image-reveal {
+  0% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+
+.image-reveal {
+  animation: image-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+/* ── Skill bar fill animation ── */
+
+@keyframes skill-fill {
+  from { width: 0; }
+}
+
+.skill-bar-fill {
+  animation: skill-fill 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── Hover tilt effect ── */
+
+.hover-tilt {
+  transition: transform 0.3s ease;
+}
+
+.hover-tilt:hover {
+  transform: perspective(800px) rotateY(-2deg) rotateX(2deg) translateY(-4px);
+}
